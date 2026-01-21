@@ -1,29 +1,24 @@
 import { GroupRegistry } from './GroupRegistry';
 import { UserList } from './UserList';
-import { useUsersStore } from './usersStore';
+import { usersLibrary } from './usersLibrary';
 
 export default function UserManagementDashboard() {
-  const addUser = useUsersStore((state) => state.addUser);
-  const addGroup = useUsersStore((state) => state.addGroup);
-  const addUserGroup = useUsersStore((state) => state.addUserGroup);
-
-  // Local store state for logic (using selectors for actions is best practice)
-  const users = useUsersStore((state) => state.users);
-  const groups = useUsersStore((state) => state.groups);
+  const { users, groups, handleAddUser, handleAddGroup, handleAddUserGroup } =
+    usersLibrary();
 
   const handleCreateUser = () => {
     const id = Date.now();
-    addUser({ id, name: `User_${id.toString().slice(-4)}`, groups: [] });
+    handleAddUser({ id, name: `User_${id.toString().slice(-4)}`, groups: [] });
   };
 
   const handleCreateGroup = () => {
     const id = Date.now();
-    addGroup({ id, name: `Group_${id.toString().slice(-4)}` });
+    handleAddGroup({ id, name: `Group_${id.toString().slice(-4)}` });
   };
 
   const handleAssignToFirstUser = (group: any) => {
     if (users.length > 0) {
-      addUserGroup(users[0].id, group);
+      handleAddUserGroup(users[0].id, group);
     } else {
       alert('Create a user first!');
     }

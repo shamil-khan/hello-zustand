@@ -1,10 +1,8 @@
-import React from 'react';
-import { useUsersStore } from './usersStore';
+import { usersLibrary } from './usersLibrary';
 
 // Displays the global available groups
 export const GroupRegistry = () => {
-  const groups = useUsersStore((state) => state.groups);
-  const removeGroup = useUsersStore((state) => state.removeGroup);
+  const { groups, handleRemoveGroup } = usersLibrary();
 
   return (
     <div style={{ border: '1px solid #ccc', padding: '1rem' }}>
@@ -12,7 +10,9 @@ export const GroupRegistry = () => {
       {groups.map((group) => (
         <div key={group.id}>
           {group.name}
-          <button onClick={() => removeGroup(group.id)}>Remove Globally</button>
+          <button onClick={() => handleRemoveGroup(group.id)}>
+            Remove Globally
+          </button>
         </div>
       ))}
     </div>

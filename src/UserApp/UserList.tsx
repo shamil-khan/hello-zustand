@@ -1,11 +1,8 @@
-import React from 'react';
-import { useUsersStore } from './usersStore';
+import { usersLibrary } from './usersLibrary';
 
 // Displays individual users and their specific groups
 export const UserList = () => {
-  const users = useUsersStore((state) => state.users);
-  const removeUser = useUsersStore((state) => state.removeUser);
-  const removeUserGroup = useUsersStore((state) => state.removeUserGroup);
+  const { users, handleRemoveUser, handleRemoveUserGroup } = usersLibrary();
 
   return (
     <div
@@ -23,7 +20,7 @@ export const UserList = () => {
         >
           <strong>{user.name}</strong>
           <button
-            onClick={() => removeUser(user.id)}
+            onClick={() => handleRemoveUser(user.id)}
             style={{ marginLeft: '10px' }}
           >
             Delete User
@@ -33,7 +30,7 @@ export const UserList = () => {
             {user.groups.map((g) => (
               <li key={g.id}>
                 {g.name}
-                <button onClick={() => removeUserGroup(user.id, g.id)}>
+                <button onClick={() => handleRemoveUserGroup(user.id, g.id)}>
                   x
                 </button>
               </li>
